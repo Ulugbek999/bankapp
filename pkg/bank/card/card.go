@@ -1,34 +1,60 @@
 package card
 
-import "bank/pkg/bank/types"
-
-
-
-
+import (
+	"bank/pkg/bank/types"
 	
-// тотал вычисляет общую сумму на всех картах
-// отрицательные суммы и суммы на заблокированных картах игнорируются
+)
 
-	func Total(cards []types.Card) types.Money  {
-		 sum := types.Money(0)
 
-	
+func PaymentSources(cards []types.Card) []types.PaymentSource {
 
-		for _, card := range cards{
+		payment := []types.PaymentSource{}
+		
 			
+			for _, card := range cards {
 			if !card.Active == true{
 				continue
 			}
+				
 			if card.Balance <= 0 {
 				continue
 			}
+			
+			payment = append(payment, types.PaymentSource{
+				Type: "card",
+				Number: string(card.PAN),
+				Balance: card.Balance,
+			  })
 
-			sum += card.Balance
+			  
 		}
 
 		
-		return sum
-		
+		return payment
+
 	}
+
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
 
 
